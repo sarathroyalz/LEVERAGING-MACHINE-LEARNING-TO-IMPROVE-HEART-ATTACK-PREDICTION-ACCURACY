@@ -1,0 +1,2 @@
+# LEVERAGING-MACHINE-LEARNING-TO-IMPROVE-HEART-ATTACK-PREDICTION-ACCURACY
+This project leverages machine learning to enhance heart attack prediction by analyzing factors like age, cholesterol, and blood pressure. Using advanced classification algorithms, it identifies high-risk individuals early, enabling timely intervention. The goal is to improve diagnostic precision and promote preventive healthcare.
