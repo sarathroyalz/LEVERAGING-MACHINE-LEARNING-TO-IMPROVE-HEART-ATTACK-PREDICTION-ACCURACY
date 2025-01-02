@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Set the background image to cover the whole page */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.nsmedicaldevices.com/wp-content/uploads/sites/2/2021/05/shutterstock_1303927084.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 9px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+
+    <!-- Display Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="text-align: center; padding: 10px; background-color: #f8d7da; color: #721c24; border-radius: 5px; margin: 10px;">
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="Enter your username" required>
+        
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <input type="submit" value="Login">
+    </form>
+
+    <div class="footer">
+        <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        <p><a href="/forgot-password">Forgot Password?</a></p>
+    </div>
+</div>
+
+</body>
+</html>

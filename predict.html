@@ -1,0 +1,409 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .header .auth-buttons {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .auth-buttons button {
+        background-color: #fff;
+        color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .auth-buttons button:hover {
+        background-color: #ddd;
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .navbar a {
+        float: left;
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        display: block;
+    }
+
+    /* Dropdown Container */
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        background-color: #333;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: white;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Show the dropdown menu when the user hovers over the dropdown */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .navbar a:hover, .dropdown:hover .dropbtn {
+        background-color: #575757;
+    }
+
+    /* Container styles */
+    .container {
+        max-width: 1200px; /* Increase the container width */
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+    h1, h2 {
+        color: white;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+    }
+
+    /* Image styling */
+    #predict img {
+        width: 80%; /* Make image bigger */
+        max-width: 600px; /* Set a max-width for the image */
+        display: block;
+        margin: 0 auto 20px; /* Center the image */
+        border-radius: 10px;
+    }
+
+    /* Input fields container styling */
+    .input-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .input-row div {
+        flex: 1;
+        margin: 5px;
+        min-width: 300px; /* Ensure input fields stay in a reasonable size */
+    }
+
+    .input-row input[type="number"], select {
+        width: 100%; /* Make the input fields take the full width of the container */
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Input button styling */
+    input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        width: 80%;
+        margin: 0 auto;
+        display: block; /* Center the button */
+    }
+
+    .footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 20px;
+    }
+
+    /* Predict Form Full Black Style */
+    #predict {
+        background-color: black;
+        color: white;
+        width: 100%;
+    }
+
+    /* Improved Input field and label styling for black background */
+    .input-row div label {
+        color: white;
+    }
+</style>
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections first
+            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
+            // Show the selected section
+            document.getElementById(sectionId).style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+
+<div class="navbar">
+    <a onclick="showSection('predict')">Predict</a>
+    <div class="dropdown">
+        <button class="dropbtn">About</button>
+        <div class="dropdown-content">
+            <a onclick="showSection('about')">About Heart Disease Prediction</a>
+            <a onclick="showSection('prevention')">Prevention Tips</a>
+            <a onclick="showSection('insights')">Health Insights</a>
+        </div>
+    </div>
+    <a onclick="showSection('contact')">Contact Doctors</a>
+    <div class="dropdown">
+        <button class="dropbtn">Model & Data</button>
+        <div class="dropdown-content">
+            <a onclick="showSection('model')">Model Overview</a>
+            <a onclick="showSection('dataset')">Dataset</a>
+        </div>
+    </div>
+    <a onclick="showSection('diagnostics')">Diagnostics & Testing</a>
+</div>
+
+<!-- Predict Section -->
+<div class="container" id="predict">
+    <!-- Image above the form -->
+    <img src="https://th.bing.com/th/id/OIP.8kBCeCfciAMcvq_zPD0YBwHaEK?w=314&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Heart Disease Image">
+
+    <h2>Predict Heart Disease </h2>
+    <form action="/predict" method="POST">
+        <!-- First Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" name="age" required>
+            </div>
+            <div>
+                <label for="sex">Sex (0 = female, 1 = male):</label>
+                <input type="number" name="sex" required min="0" max="1">
+            </div>
+        </div>
+
+        <!-- Second Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="cp">Chest Pain Type (0-3):</label>
+                <input type="number" name="cp" required min="0" max="3">
+            </div>
+            <div>
+                <label for="trestbps">Resting Blood Pressure:</label>
+                <input type="number" name="trestbps" required>
+            </div>
+        </div>
+
+        <!-- Third Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="chol">Serum Cholesterol in mg/dl:</label>
+                <input type="number" name="chol" required>
+            </div>
+            <div>
+                <label for="fbs">Fasting Blood Sugar > 120 mg/dl (1 = true, 0 = false):</label>
+                <input type="number" name="fbs" required min="0" max="1">
+            </div>
+        </div>
+
+        <!-- Fourth Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="restecg">Resting Electrocardiographic Results (0-2):</label>
+                <input type="number" name="restecg" required min="0" max="2">
+            </div>
+            <div>
+                <label for="thalach">Maximum Heart Rate Achieved:</label>
+                <input type="number" name="thalach" required>
+            </div>
+        </div>
+
+        <!-- Fifth Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="exang">Exercise Induced Angina (1 = yes, 0 = no):</label>
+                <input type="number" name="exang" required min="0" max="1">
+            </div>
+            <div>
+                <label for="oldpeak">Oldpeak:</label>
+                <input type="number" name="oldpeak" step="0.1" required>
+            </div>
+        </div>
+
+        <!-- Sixth Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="slope">Slope of the Peak Exercise ST Segment (0-2):</label>
+                <input type="number" name="slope" required min="0" max="2">
+            </div>
+            <div>
+                <label for="ca">Number of Major Vessels (0-3):</label>
+                <input type="number" name="ca" required min="0" max="3">
+            </div>
+        </div>
+
+        <!-- Seventh Row with two input fields -->
+        <div class="input-row">
+            <div>
+                <label for="thal">Thalassemia (0 = normal, 1 = fixed defect, 2 = reversible defect):</label>
+                <input type="number" name="thal" required min="0" max="2">
+            </div>
+        </div>
+
+
+            <input type="submit" value="Predict">
+        </div>
+    </form>
+</div>
+
+<!-- About Section -->
+<div class="container" id="about">
+    <h2>About Heart Disease Prediction</h2>
+    <p>Heart disease prediction is a healthcare service that helps individuals assess their risk of heart-related ailments. This form allows users to enter personal health data, which can be analyzed using predictive algorithms to estimate the likelihood of heart disease. Please consult with a healthcare professional for a detailed analysis and diagnosis.</p>
+</div>
+
+<!-- Prevention Tips Section -->
+<div class="container" id="prevention">
+    <h2>Prevention Tips</h2>
+    <p>Here are some important tips to help prevent heart disease:</p>
+    <ul>
+        <li>Maintain a healthy diet rich in fruits, vegetables, and whole grains.</li>
+        <li>Exercise regularly to keep your heart healthy.</li>
+        <li>Manage stress through relaxation techniques like meditation and yoga.</li>
+        <li>Avoid smoking and limit alcohol consumption.</li>
+        <li>Control your blood pressure and cholesterol levels.</li>
+        <li>Get enough sleep and maintain a healthy weight.</li>
+    </ul>
+</div>
+
+<!-- Health Insights Section -->
+<div class="container" id="insights">
+    <h2>Health Insights</h2>
+    <p>Our health insights section provides personalized suggestions based on your risk factors:</p>
+    <ul>
+        <li>If your cholesterol is high, consider eating foods rich in omega-3 fatty acids and fiber.</li>
+        <li>If you have a sedentary lifestyle, try to incorporate at least 30 minutes of physical activity every day.</li>
+        <li>Monitor your blood sugar and blood pressure regularly to stay on top of your heart health.</li>
+    </ul>
+</div>
+
+<!-- Contact Doctors Section -->
+<div class="container" id="contact">
+    <h2>Contact Doctors</h2>
+    <p>If you have any concerns or questions, please reach out to one of our experienced cardiologists:</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dr. Jane Doe</td>
+                <td>Cardiologist</td>
+                <td><a href="mailto:jane.doe@hospital.com">jane.doe@hospital.com</a></td>
+            </tr>
+            <tr>
+                <td>Dr. John Smith</td>
+                <td>Cardiologist</td>
+                <td><a href="mailto:john.smith@hospital.com">john.smith@hospital.com</a></td>
+            </tr>
+            <tr>
+                <td>Dr. venkata sainath</td>
+                <td>Cardiovascular Specialist</td>
+                <td><a href="mailto:sainath.venkat@hospital.com">sainath.venkat@hospital.com</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Model Overview Section -->
+<div class="container" id="model">
+    <h2>Model Overview</h2>
+    <p>Our heart disease prediction model uses a variety of machine learning algorithms to assess risk factors and predict the likelihood of heart disease. These models analyze patterns in medical data to provide accurate predictions.</p>
+    <p>Models used include:</p>
+    <ul>
+        <li>Logistic Regression</li>
+        <li>Random Forest</li>
+        <li>Support Vector Machines (SVM)</li>
+        <li>Neural Networks</li>
+        <li>Gradient Boosting Machines (GBM)</li>
+    </ul>
+</div>
+
+<!-- Dataset Section -->
+<div class="container" id="dataset">
+    <h2>Dataset</h2>
+    <p>The dataset used for training the model includes features like age, cholesterol levels, blood pressure, and more. You can explore and download the dataset to understand how these factors impact heart disease risk.</p>
+    <a href="https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset">Download Dataset</a>
+</div>
+
+<!-- Diagnostics & Testing Section -->
+<div class="container" id="diagnostics">
+    <h2>Diagnostics & Testing</h2>
+    <p>To diagnose heart disease, various tests are performed, such as:</p>
+    <ul>
+        <li>Blood Tests (e.g., cholesterol levels, glucose)</li>
+        <li>Electrocardiogram (ECG)</li>
+        <li>Stress Testing</li>
+        <li>Cardiac Imaging (e.g., CT scans, MRIs)</li>
+    </ul>
+    <p>These tests help doctors evaluate heart health and diagnose potential issues early.</p>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 Heart Disease Prediction</p>
+</div>
+
+</body>
+</html>
